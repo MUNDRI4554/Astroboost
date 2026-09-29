@@ -67,4 +67,5 @@ public class Movement : MonoBehaviour
        transform.Rotate(Vector3.forward*rotatePerFrame*Time.fixedDeltaTime); 
        rb.freezeRotation = false;
     }
+
 }
