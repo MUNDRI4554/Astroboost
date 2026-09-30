@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
@@ -26,10 +27,16 @@ public class CollisionHandler : MonoBehaviour
 
             default:
                 {
-                    Debug.Log("SWIM AWAY IMMEDIATELY");
-                    break;
+                   ReloadScene();
+                   break;
                 }
                 
         }
+    }
+
+    private void ReloadScene()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
     }
 }
