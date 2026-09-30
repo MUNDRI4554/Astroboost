@@ -21,7 +21,7 @@ public class CollisionHandler : MonoBehaviour
 
             case "Finish":
                 {
-                    Debug.Log("Hey you finally reached");
+                    NextScene();
                     break;
                 }
 
@@ -38,5 +38,18 @@ public class CollisionHandler : MonoBehaviour
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentScene);
+    }
+
+    private void NextScene()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        int nextScene = currentScene + 1;
+
+        if (nextScene == SceneManager.sceneCountInBuildSettings)
+        {
+            nextScene = 0;
+        }
+
+        SceneManager.LoadScene(nextScene);
     }
 }
