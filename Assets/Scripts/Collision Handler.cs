@@ -8,7 +8,8 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float InvokeDelay;
     [SerializeField] AudioClip crashSound;
     [SerializeField] AudioClip successSound;
-
+    
+    bool IsControllable = true;
     AudioSource audioSource;
 
     private void Start() 
@@ -19,32 +20,35 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) 
     {
-        switch (other.gameObject.tag)
+        if (IsControllable)
         {
-            case "Friendly":
+            switch (other.gameObject.tag)
             {
-                Debug.Log("Here we go!!");
-                break;
-            }
+                    case "Friendly":
+                    {
+                        Debug.Log("Here we go!!");
+                        break;
+                    }
 
-            case "Fuel":
-                {
-                    Debug.Log("You arent supposed to be here");
-                    break;
-                }
+                    case "Fuel":
+                        {
+                            Debug.Log("You arent supposed to be here");
+                            break;
+                        }
 
-            case "Finish":
-                {
-                    StartLoadSequence();
-                    break;
-                }
+                    case "Finish":
+                        {
+                            StartLoadSequence();
+                            break;
+                        }
 
-            default:
-                {
-                   StartCrashSequence();
-                   break;
-                }
-                
+                    default:
+                        {
+                        StartCrashSequence();
+                        break;
+                        }
+
+            }   
         }
     }
 
@@ -69,6 +73,8 @@ public class CollisionHandler : MonoBehaviour
 
     private void StartCrashSequence()
     {
+        IsControllable = false;
+        audioSource.Stop();
         audioSource.PlayOneShot(crashSound);
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadScene",InvokeDelay);
@@ -76,7 +82,10 @@ public class CollisionHandler : MonoBehaviour
 
     private void StartLoadSequence()
     {
+        IsControllable = false;
+        audioSource.Stop();
         audioSource.PlayOneShot(successSound);
+        audioSource.Stop();
         GetComponent<Movement>().enabled = false;
         Invoke ("NextScene",InvokeDelay);
     }

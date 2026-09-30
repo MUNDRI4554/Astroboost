@@ -17,6 +17,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: b19193526ff387a489803306bfec741e, type: 3}
     - target: {fileID: 1774538429664526076, guid: dfd0fa6930f2ae7429932458cded8b8f, type: 3}
+      propertyPath: thrustStrength
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774538429664526076, guid: dfd0fa6930f2ae7429932458cded8b8f, type: 3}
       propertyPath: rotationStrength
       value: 100
       objectReference: {fileID: 0}

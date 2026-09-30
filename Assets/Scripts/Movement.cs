@@ -11,7 +11,6 @@ public class Movement : MonoBehaviour
     Rigidbody rb;
     AudioSource audiosource;
 
-
     private void OnEnable()
     {
         rotation.Enable();  
