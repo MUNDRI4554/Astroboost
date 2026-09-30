@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,6 +6,17 @@ public class CollisionHandler : MonoBehaviour
 {
 
     [SerializeField] float InvokeDelay;
+    [SerializeField] AudioClip crashSound;
+    [SerializeField] AudioClip successSound;
+
+    AudioSource audioSource;
+
+    private void Start() 
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+
     private void OnCollisionEnter(Collision other) 
     {
         switch (other.gameObject.tag)
@@ -57,12 +69,14 @@ public class CollisionHandler : MonoBehaviour
 
     private void StartCrashSequence()
     {
+        audioSource.PlayOneShot(crashSound);
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadScene",InvokeDelay);
     }
 
     private void StartLoadSequence()
     {
+        audioSource.PlayOneShot(successSound);
         GetComponent<Movement>().enabled = false;
         Invoke ("NextScene",InvokeDelay);
     }

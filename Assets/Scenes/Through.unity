@@ -924,6 +924,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8463820572365500451, guid: b61dd087ae5a90c49af1088402afe3ed, type: 3}
+      propertyPath: crashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c59b04d8e545e734f9415533fc15d93c, type: 3}
     - target: {fileID: 8791411791174600730, guid: b61dd087ae5a90c49af1088402afe3ed, type: 3}
       propertyPath: m_Name
       value: PrefabRoot
