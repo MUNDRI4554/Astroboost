@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+
+    [SerializeField] float InvokeDelay;
     private void OnCollisionEnter(Collision other) 
     {
         switch (other.gameObject.tag)
@@ -21,13 +23,13 @@ public class CollisionHandler : MonoBehaviour
 
             case "Finish":
                 {
-                    NextScene();
+                    StartLoadSequence();
                     break;
                 }
 
             default:
                 {
-                   ReloadScene();
+                   StartCrashSequence();
                    break;
                 }
                 
@@ -51,5 +53,17 @@ public class CollisionHandler : MonoBehaviour
         }
 
         SceneManager.LoadScene(nextScene);
+    }
+
+    private void StartCrashSequence()
+    {
+        GetComponent<Movement>().enabled = false;
+        Invoke("ReloadScene",InvokeDelay);
+    }
+
+    private void StartLoadSequence()
+    {
+        GetComponent<Movement>().enabled = false;
+        Invoke ("NextScene",InvokeDelay);
     }
 }
