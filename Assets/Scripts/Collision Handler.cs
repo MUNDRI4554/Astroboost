@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +7,8 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float InvokeDelay;
     [SerializeField] AudioClip crashSound;
     [SerializeField] AudioClip successSound;
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem crashParticles;
     
     bool IsControllable = true;
     AudioSource audioSource;
@@ -76,6 +77,7 @@ public class CollisionHandler : MonoBehaviour
         IsControllable = false;
         audioSource.Stop();
         audioSource.PlayOneShot(crashSound);
+        crashParticles.Play();
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadScene",InvokeDelay);
     }
@@ -85,7 +87,7 @@ public class CollisionHandler : MonoBehaviour
         IsControllable = false;
         audioSource.Stop();
         audioSource.PlayOneShot(successSound);
-        audioSource.Stop();
+        successParticles.Play();
         GetComponent<Movement>().enabled = false;
         Invoke ("NextScene",InvokeDelay);
     }
