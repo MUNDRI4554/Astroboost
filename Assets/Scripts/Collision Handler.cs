@@ -45,32 +45,15 @@ public class CollisionHandler : MonoBehaviour
 
                     default:
                         {
-                        StartCrashSequence();
-                        break;
+                            StartCrashSequence();
+                            break;
                         }
 
             }   
         }
     }
 
-    private void ReloadScene()
-    {
-        int currentScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentScene);
-    }
-
-    private void NextScene()
-    {
-        int currentScene = SceneManager.GetActiveScene().buildIndex;
-        int nextScene = currentScene + 1;
-
-        if (nextScene == SceneManager.sceneCountInBuildSettings)
-        {
-            nextScene = 0;
-        }
-
-        SceneManager.LoadScene(nextScene);
-    }
+    //StartCrashSequence and StartLoadSequence is called in OnCollisionEnter
 
     private void StartCrashSequence()
     {
@@ -91,4 +74,28 @@ public class CollisionHandler : MonoBehaviour
         GetComponent<Movement>().enabled = false;
         Invoke ("NextScene",InvokeDelay);
     }
+
+    //ReloadScene is called in StartCrashSequence
+
+    private void ReloadScene()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
+    }
+
+    //NextScene is called in StartLoadSequence
+
+    private void NextScene()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        int nextScene = currentScene + 1;
+
+        if (nextScene == SceneManager.sceneCountInBuildSettings)
+        {
+            nextScene = 0;
+        }
+
+        SceneManager.LoadScene(nextScene);
+    }
+
 }

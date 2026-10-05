@@ -37,21 +37,11 @@ public class Movement : MonoBehaviour
     {
         if (thrust.IsPressed())
         {
-            rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime);
-
-            if (!audiosource.isPlaying)
-            {
-                audiosource.PlayOneShot(engineThrust);
-            }
-            if (!mainThrusterParticles.isPlaying)
-            {
-                mainThrusterParticles.Play();
-            }
+            StartThrusting();
         }
         else
         {
-            audiosource.Stop();
-            mainThrusterParticles.Stop();
+            StopThrusting();
         }
     }
 
@@ -61,29 +51,45 @@ public class Movement : MonoBehaviour
 
         if (rotationInput < 0)
         {
-            ApplyRotation(rotationStrength);
-            if (!leftThrusterParticles.isPlaying)
-            {
-                rightThrusterParticles.Stop();
-                leftThrusterParticles.Play();
-            }
+            LeftRotation();
         }
         else if (rotationInput > 0)
         {
-            ApplyRotation(-rotationStrength);
-            if (!rightThrusterParticles.isPlaying)
-            {
-                leftThrusterParticles.Stop();
-                rightThrusterParticles.Play();
-            }
+            RightRotation();
         }
         else
         {
-            rightThrusterParticles.Stop();
-            leftThrusterParticles.Stop();
+            StopRotation();
         }
     }
-    //thrust_Ispressed and rotation_Ispressed are called in FixedUpdate 
+
+    //StopRotation, RightRotation, LeftRotation, ApplyRotation is called in rotation_isPressed
+
+    private void StopRotation()
+    {
+        rightThrusterParticles.Stop();
+        leftThrusterParticles.Stop();
+    }
+
+    private void RightRotation()
+    {
+        ApplyRotation(-rotationStrength);
+        if (!rightThrusterParticles.isPlaying)
+        {
+            leftThrusterParticles.Stop();
+            rightThrusterParticles.Play();
+        }
+    }
+
+    private void LeftRotation()
+    {
+        ApplyRotation(rotationStrength);
+        if (!leftThrusterParticles.isPlaying)
+        {
+            rightThrusterParticles.Stop();
+            leftThrusterParticles.Play();
+        }
+    }
 
     private void ApplyRotation(float rotatePerFrame)
     {
@@ -92,4 +98,27 @@ public class Movement : MonoBehaviour
        rb.freezeRotation = false;
     }
 
+    //StopThrusting and StartThrusting is called in thrust_Ispressed
+
+    private void StartThrusting()
+    {
+        rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime);
+
+        if (!audiosource.isPlaying)
+        {
+            audiosource.PlayOneShot(engineThrust);
+        }
+        if (!mainThrusterParticles.isPlaying)
+        {
+            mainThrusterParticles.Play();
+        }
+    }
+
+    private void StopThrusting()
+    {
+        audiosource.Stop();
+        mainThrusterParticles.Stop();
+    }
 }
+
+
