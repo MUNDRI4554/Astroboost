@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
@@ -11,6 +12,7 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] ParticleSystem crashParticles;
     
     bool IsControllable = true;
+    bool IsCollidable = true;
     AudioSource audioSource;
 
     private void Start() 
@@ -18,12 +20,18 @@ public class CollisionHandler : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    void Update()
+    {
+        RespondToDebugKeys();
+    }
 
     private void OnCollisionEnter(Collision other) 
     {
-        if (IsControllable)
+        if (!IsControllable || !IsCollidable)
         {
-            switch (other.gameObject.tag)
+            return;
+        }
+        switch (other.gameObject.tag)
             {
                     case "Friendly":
                     {
@@ -50,7 +58,6 @@ public class CollisionHandler : MonoBehaviour
                         }
 
             }   
-        }
     }
 
     //StartCrashSequence and StartLoadSequence is called in OnCollisionEnter
@@ -96,6 +103,20 @@ public class CollisionHandler : MonoBehaviour
         }
 
         SceneManager.LoadScene(nextScene);
+    }
+
+    //RespondtoDebugKeys is called in Update
+
+    private void RespondToDebugKeys()
+    {
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+        {
+            NextScene();
+        }
+        else if (Keyboard.current.cKey.wasPressedThisFrame)
+        {
+            IsCollidable = !IsCollidable;
+        }
     }
 
 }
