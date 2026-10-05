@@ -8,6 +8,9 @@ public class Movement : MonoBehaviour
     [SerializeField] float thrustStrength;
     [SerializeField] float rotationStrength;
     [SerializeField] AudioClip engineThrust;
+    [SerializeField] ParticleSystem mainThrusterParticles;
+    [SerializeField] ParticleSystem rightThrusterParticles;
+    [SerializeField] ParticleSystem leftThrusterParticles;
     Rigidbody rb;
     AudioSource audiosource;
 
@@ -40,10 +43,15 @@ public class Movement : MonoBehaviour
             {
                 audiosource.PlayOneShot(engineThrust);
             }
+            if (!mainThrusterParticles.isPlaying)
+            {
+                mainThrusterParticles.Play();
+            }
         }
         else
         {
-                audiosource.Stop();
+            audiosource.Stop();
+            mainThrusterParticles.Stop();
         }
     }
 
@@ -54,10 +62,25 @@ public class Movement : MonoBehaviour
         if (rotationInput < 0)
         {
             ApplyRotation(rotationStrength);
+            if (!leftThrusterParticles.isPlaying)
+            {
+                rightThrusterParticles.Stop();
+                leftThrusterParticles.Play();
+            }
         }
         else if (rotationInput > 0)
         {
             ApplyRotation(-rotationStrength);
+            if (!rightThrusterParticles.isPlaying)
+            {
+                leftThrusterParticles.Stop();
+                rightThrusterParticles.Play();
+            }
+        }
+        else
+        {
+            rightThrusterParticles.Stop();
+            leftThrusterParticles.Stop();
         }
     }
     //thrust_Ispressed and rotation_Ispressed are called in FixedUpdate 
